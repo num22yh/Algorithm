@@ -1,13 +1,18 @@
 import sys
 
 while True:
-    n = int(sys.stdin.readline().strip())
+    n = int(sys.stdin.readline())
     if n == 0:
         break
 
-    arr = [sys.stdin.readline().strip() for _ in range(n)]
+    arr=[]
 
-    # 사전 순으로 정렬하되, 대소문자 구분 없이 정렬 (대소문자 무시)
-    arr_sorted = sorted(arr, key=lambda x: x.lower())
+    for _ in range(n):
+        word = sys.stdin.readline().rstrip()
+        arr.append(word)
 
-    print(arr_sorted[0])
+    arr.sort(key= lambda x : x.lower())
+
+    print(arr[0])
+        
+
