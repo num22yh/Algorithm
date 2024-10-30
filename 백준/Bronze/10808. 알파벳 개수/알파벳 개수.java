@@ -9,18 +9,15 @@ public class Main {
         String S = br.readLine();
         int[] count = new int[26];
 
-        for (int i = 0; i < S.length(); i++) {
+        for (int i = 0; i < S.length(); i++){
             char ch = S.charAt(i);
             int index = ch - 'a';
             count[index]++;
         }
 
-        // StringBuilder로 출력 최적화
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 26; i++) {
-            sb.append(count[i]).append(" ");
+        for (int i =0; i < 26; i++){
+            System.out.print(count[i] + " ");
         }
-        
-        System.out.println(sb.toString().trim()); // 한 번에 출력
+
     }
 }
