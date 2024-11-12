@@ -6,6 +6,7 @@ public class Main {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    StringBuilder sb = new StringBuilder();
     int n = Integer.parseInt(br.readLine());
 
     for (int i=0; i<n; i++){
@@ -19,17 +20,12 @@ public class Main {
       Arrays.sort(firstArray);
       Arrays.sort(secondArray);
 
-      boolean result = true;
-      for (int index=0; index<firstArray.length; index++){
-        if (firstArray[index] != secondArray[index]){
-          result = false;
-          break;
-        }
-      }
+      boolean result = Arrays.equals(firstArray, secondArray);
 
-      bw.write(result ? "Possible\n" : "Impossible\n");
+      sb.append(Arrays.equals(firstArray, secondArray) ? "Possible\n" : "Impossible\n");
+
     }
 
-    bw.flush();
+    System.out.println(sb);
   }
 }
