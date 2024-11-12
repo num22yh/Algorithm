@@ -5,6 +5,7 @@ public class Main {
   public static void main(String[] args) throws IOException {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     int n = Integer.parseInt(br.readLine());
 
     for (int i=0; i<n; i++){
@@ -26,11 +27,9 @@ public class Main {
         }
       }
 
-      if (result){
-        System.out.println("Possible");
-      }else{
-        System.out.println("Impossible");
-      }
+      bw.write(result ? "Possible\n" : "Impossible\n");
     }
+
+    bw.flush();
   }
 }
