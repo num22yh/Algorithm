@@ -1,23 +1,26 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-
+public class Main{
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        
         String S = br.readLine();
+        char[] word = S.toCharArray();
+
         int[] count = new int[26];
 
-        for (int i = 0; i < S.length(); i++){
-            char ch = S.charAt(i);
-            int index = ch - 'a';
-            count[index]++;
+        for (char alphabet : word){
+            int i = alphabet - 'a';
+            count[i]++;
         }
-
-        for (int i =0; i < 26; i++){
-            System.out.print(count[i] + " ");
+        
+        for (int i : count){
+            sb.append(i);
+            sb.append(" ");
         }
+        
+        System.out.println(sb);
 
     }
 }
