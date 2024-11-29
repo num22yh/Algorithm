@@ -7,39 +7,36 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
 
-        ArrayDeque<Integer> stack1 = new ArrayDeque<>();
-        ArrayDeque<Integer> stack2 = new ArrayDeque<>();
-
-        for (int i = n; i > 0; i--) {
-            stack1.push(i);
-        }
+        int current = 1; // 스택에 푸시할 숫자
+        boolean isPossible = true;
 
         for (int i = 0; i < n; i++) {
-            int k = Integer.parseInt(br.readLine());
+            int target = Integer.parseInt(br.readLine());
 
-            if (stack2.peek() != null && stack2.peek() == k) {
-                stack2.pop();
-                sb.append("-" + "\n");
+            // 스택에 푸시해야 할 경우
+            while (current <= target) {
+                stack.push(current++);
+                sb.append("+\n");
+            }
+
+            // 스택의 최상단이 목표 숫자인 경우 팝
+            if (stack.peek() != null && stack.peek() == target) {
+                stack.pop();
+                sb.append("-\n");
             } else {
-                if (stack1.peek() == null || stack1.peek() > k) {
-                    sb = new StringBuilder();
-                    sb.append("NO");
-                    break;
-                }
-                while (stack1.peek()!=null && stack1.peek() <= k) {
-                    stack2.push(stack1.pop());
-                    sb.append("+" + "\n");
-                    if(stack2.peek()==k){
-                        stack2.pop();
-                        sb.append("-" + "\n");
-                    }
-
-                }
-
+                // 목표 숫자를 만들 수 없는 경우
+                isPossible = false;
+                break;
             }
         }
 
-        System.out.println(sb);
+        // 결과 출력
+        if (isPossible) {
+            System.out.println(sb);
+        } else {
+            System.out.println("NO");
+        }
     }
 }
