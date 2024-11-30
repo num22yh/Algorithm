@@ -1,34 +1,39 @@
-import java.util.Scanner;
-import java.util.Stack;
+import java.io.*;
+import java.util.ArrayDeque;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt(); // 건물의 개수
-        long[] heights = new long[n]; // 건물 높이 배열
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        ArrayDeque<long[]> stack = new ArrayDeque<>();
+        long[] input = new long[n];
 
         for (int i = 0; i < n; i++) {
-            heights[i] = scanner.nextLong();
+            input[i] = Long.parseLong(br.readLine());
         }
 
-        // 스택을 사용하여 보이는 건물 계산
-        Stack<Long> stack = new Stack<>();
-        long count = 0;
+        long result = 0;
 
-        for (int i = 0; i < n; i++) {
-            // 현재 건물보다 작은 건물은 스택에서 제거
-            while (!stack.isEmpty() && stack.peek() <= heights[i]) {
-                stack.pop();
+        for (int i = n - 1; i > -1; i--) {
+            long curHeight = input[i];
+            int canSee = 0;
+
+            while (!stack.isEmpty() && (stack.peek()[1] < curHeight)) {
+
+                    long[] removedBuilding = stack.pop();
+                    canSee += (removedBuilding[0] + 1);
+
+
+
             }
-            
-            // 스택에 남아 있는 건물 수를 더함
-            count += stack.size();
 
-            // 현재 건물을 스택에 추가
-            stack.push(heights[i]);
+            stack.push(new long[]{canSee, curHeight});
+            result += canSee;
         }
 
-        System.out.println(count);
-        scanner.close();
+        System.out.print(result);
+
+
     }
+
 }
