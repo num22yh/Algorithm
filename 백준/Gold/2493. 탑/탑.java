@@ -11,31 +11,27 @@ public class Main{
         ArrayDeque<int[]> stack = new ArrayDeque<>();
         int curIndx = 0;
 
-        for(String s : input){
-            int curTower = Integer.parseInt(s);
+        for(String s : input) {
+            int curHeight = Integer.parseInt(s);
             curIndx++;
-
-            if(stack.peek()==null){
-                sb.append(0+" ");
-            }else if(stack.peek()[1] >= curTower){
-                sb.append(stack.peek()[0]+" ");
-            }else{ // stack.peek()[0] < curTower
-                while(stack.peek()!= null && stack.peek()[1] < curTower){
-                    stack.pop();
-                }
-                if(stack.peek()==null){
-                    sb.append(0+" ");
-                }else{
-                    sb.append(stack.peek()[0]+" ");
-                }
-
+            
+            // 새로운 탑을 넣기 전에 스택의 마지막 원소가 현재 탑보다 낮다면 제거 ( 어차피 현재 탑에 의해 가려지기 때문 )
+            while(!stack.isEmpty() && stack.peek()[1]< curHeight){
+                stack.pop();
             }
-
-            stack.push(new int[]{curIndx,curTower});
-        }
-
+            
+            // 신호를 받을 탑을 확인
+            if(stack.isEmpty()){
+                sb.append(0).append(" "); // 신호 받을 탑 없음
+            }else{
+                sb.append(stack.peek()[0]).append(" "); // 스택의 마지막 원소의 높이가 신호를 받을 탑
+            }
+            
+            //현재 탑을 스택에 추가
+            stack.push(new int[]{curIndx,curHeight});
+        }    
+        
         System.out.println(sb);
-
 
     }
 }
