@@ -7,8 +7,6 @@ public class Main {
     static boolean[][] visited;
     static int[][] time;
     static ArrayDeque<int[]> queue = new ArrayDeque<>();
-    static int[] dx = {-1, 0, 1, 0}; // 상, 우, 하, 좌
-    static int[] dy = {0, 1, 0, -1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,63 +20,54 @@ public class Main {
 
         int[] start = null;
 
-        for (int i = 0; i < R; i++) {
+        for (int row = 0; row < R; row++) {
             char[] line = br.readLine().toCharArray();
-            for (int j = 0; j < C; j++) {
-                map[i][j] = line[j];
-                if (line[j] == 'F') {
-                    queue.offer(new int[]{i, j, 1}); // 불은 먼저 큐에 넣기
-                } else if (line[j] == 'J') {
-                    start = new int[]{i, j, 0}; // 지훈의 시작점
+            for (int col = 0; col < C; col++) {
+                map[row][col] = line[col];
+                if (line[col] == 'J') {
+                    start = new int[]{row, col, 0};
+                } else if (line[col] == 'F') {
+                    queue.offer(new int[]{row, col, 1}); // 불 먼저 큐에 넣기
                 }
             }
         }
 
         if (start != null) {
-            queue.offer(start);
+            queue.offer(start); // 지훈 시작점 큐에 넣기
             visited[start[0]][start[1]] = true;
         }
 
         int result = bfs();
 
-        if (result == -1) {
-            System.out.println("IMPOSSIBLE");
-        } else {
-            System.out.println(result);
-        }
+        System.out.println(result == -1 ? "IMPOSSIBLE" : result);
     }
 
     static int bfs() {
+        int[] dx = {-1, 0, 1, 0}; // 상, 우, 하, 좌
+        int[] dy = {0, 1, 0, -1};
+
         while (!queue.isEmpty()) {
             int[] current = queue.poll();
-            int x = current[0];
-            int y = current[1];
+            int cx = current[0];
+            int cy = current[1];
             int who = current[2]; // 1: 불, 0: 지훈
 
             for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
 
-                // 범위를 벗어난 경우 (지훈이 탈출한 경우)
-                if (who == 0 && (nx < 0 || ny < 0 || nx >= R || ny >= C)) {
-                    return time[x][y] + 1; // 즉시 반환
-                }
-
-                if (nx < 0 || ny < 0 || nx >= R || ny >= C) {
-                    continue;
-                }
-
-                if (who == 1) {
-                    // 🔥 불 확산
-                    if (map[nx][ny] == '.' || map[nx][ny] == 'J') {
+                if (who == 1) { // 불 이동
+                    if (nx >= 0 && ny >= 0 && nx < R && ny < C && (map[nx][ny] == '.' || map[nx][ny] == 'J')) {
                         map[nx][ny] = 'F';
                         queue.offer(new int[]{nx, ny, 1});
                     }
-                } else {
-                    // 🏃 지훈 이동
-                    if (!visited[nx][ny] && map[nx][ny] == '.') {
+                } else { // 지훈 이동
+                    if (nx < 0 || ny < 0 || nx >= R || ny >= C) {
+                        return time[cx][cy] + 1; // 탈출 성공
+                    }
+                    if (map[nx][ny] == '.' && !visited[nx][ny]) {
                         visited[nx][ny] = true;
-                        time[nx][ny] = time[x][y] + 1;
+                        time[nx][ny] = time[cx][cy] + 1;
                         queue.offer(new int[]{nx, ny, 0});
                     }
                 }
