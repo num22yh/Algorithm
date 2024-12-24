@@ -15,22 +15,7 @@ public class Main{
         int K = Integer.parseInt(input[1]);
 
         final int maxNode = 100000;
-
-        for (int x=0; x<maxNode+1; x++){
-            map.add(new ArrayList<>());
-
-            if((x-1)!= x && (x-1)>=0 && (x-1)<= maxNode){
-                map.get(x).add(x-1);
-            }
-
-            if((x+1)!= x && (x+1)>=0 && (x+1)<= maxNode){
-                map.get(x).add(x+1);
-            }
-
-            if((2*x)!= x && (2*x)>=0 && (2*x)<= maxNode){
-                map.get(x).add(2*x);
-            }
-        }
+        
         visited = new boolean[maxNode+1];
         time = new int[maxNode+1];
 
@@ -55,15 +40,18 @@ public class Main{
                 break;
             }
 
-            for( int next : map.get(current) ){
-                if(!visited[next]){
+            // 이동 가능한 위치 탐색
+            int[] nextPositions = {current - 1, current + 1, current * 2};
+
+            for (int next : nextPositions) {
+                if (next >= 0 && next <= 100000 && !visited[next]) {
                     queue.offer(next);
                     visited[next] = true;
                     time[next] = time[current] + 1;
                 }
             }
-
         }
+
 
         return minTime;
     }
