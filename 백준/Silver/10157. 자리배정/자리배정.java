@@ -3,7 +3,7 @@ import java.io.*;
 public class Main{
     static int c, r, k;
     static boolean[][] visited;
-    static int moveCount;
+    static int waitNumber = 1;
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] firstLine = br.readLine().split(" ");
@@ -15,20 +15,20 @@ public class Main{
         if(c*r<k){
             System.out.println(0);
         }else{
-            moveUp(1,0);
+            moveUp(1,1);
         }
     }
 
     static void moveUp(int cur_x, int cur_y){
         visited[cur_x][cur_y] = true;
-        if(moveCount == k){
+        if(waitNumber == k){
             System.out.println(cur_x+" "+cur_y);
             return;
         }
         int next_x = cur_x;
         int next_y = cur_y+1;
         if(next_y<=r&&!visited[next_x][next_y]){
-            moveCount++;
+            waitNumber++;
             visited[next_x][next_y] = true;
             moveUp(next_x,next_y);
         }else{
@@ -39,14 +39,14 @@ public class Main{
 
     static void moveRight(int cur_x, int cur_y){
         visited[cur_x][cur_y] = true;
-        if(moveCount == k){
+        if(waitNumber == k){
             System.out.println(cur_x+" "+cur_y);
             return;
         }
         int next_x = cur_x+1;
         int next_y = cur_y;
         if(next_x<=c&&!visited[next_x][next_y]){
-            moveCount++;
+            waitNumber++;
             visited[next_x][next_y] = true;
             moveRight(next_x,next_y);
         }else{
@@ -56,14 +56,14 @@ public class Main{
 
     static void moveDown(int cur_x, int cur_y){
         visited[cur_x][cur_y] = true;
-        if(moveCount == k){
+        if(waitNumber == k){
             System.out.println(cur_x+" "+cur_y);
             return;
         }
         int next_x = cur_x;
         int next_y = cur_y - 1;
         if(next_y>=1&&!visited[next_x][next_y]){
-            moveCount++;
+            waitNumber++;
             visited[next_x][next_y] = true;
             moveRight(next_x,next_y);
         }else{
@@ -74,14 +74,14 @@ public class Main{
 
     static void moveLeft(int cur_x, int cur_y){
         visited[cur_x][cur_y] = true;
-        if(moveCount == k){
+        if(waitNumber == k){
             System.out.println(cur_x+" "+cur_y);
             return;
         }
         int next_x = cur_x -1;
         int next_y = cur_y;
         if(next_x>=1&&!visited[next_x][next_y]){
-            moveCount++;
+            waitNumber++;
             visited[next_x][next_y] = true;
             moveRight(next_x,next_y);
         }else{
