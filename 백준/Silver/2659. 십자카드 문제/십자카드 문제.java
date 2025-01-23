@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Set<Integer> clockNumSet = new TreeSet<>();
+        TreeSet<Integer> clockNumSet = new TreeSet<>();
 
         //가능한 모든 시계수를 구하기 9^4 = 6561 의 조합에 대해 4개의 시계수들 만들어보기 => 6561*4
         for (int first = 1; first < 10; first++) {
@@ -19,6 +19,7 @@ public class Main {
             }
         }
 
+
         //입력받기
         String[] input = br.readLine().split(" ");
         // 네 모서리에 씌여있는 1이상 9이하의 숫자 4개 (시계방향), 같은 숫자 존재 가능
@@ -31,7 +32,7 @@ public class Main {
         // 현재 만든 시계수가 몇 번째로 작은 시계수인지(=인덱스+1) 출력 O(6561)
         int curClockNum = makeClockNumber(current[0], current[1], current[2], current[3]);
 
-        List<Integer> clockNumList = new ArrayList<>(clockNumSet); // 인덱스 접근을 위해 리스트로 변경
+        List<Integer> clockNumList = new ArrayList<>(clockNumSet); // 인덱스 접근을 위해 리스트로 변경 O(N)
 
         int result = clockNumList.indexOf(curClockNum) + 1;
 
