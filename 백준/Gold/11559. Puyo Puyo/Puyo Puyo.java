@@ -106,21 +106,25 @@ public class Main{
         }
     }
 
-    static void fallPuyo() {
-        for (int c = 0; c < col; c++) { // 각 열마다 처리
-            for (int r = row - 1; r > 0; r--) { // 아래에서 위로 확인
-                if (map[r][c] == '.') { // 빈 칸이면 위에서 내려와야 함
+    static void fallPuyo(){
+        for(int r = 11; r > 0; r--){
+            for(int c = 0; c<col; c++){
+                if(map[r][c]=='.'){
                     int nr = r;
                     while (nr > 0 && map[nr][c] == '.') {
-                        nr--; // 위로 올라가며 블록 찾기
+                        nr--; // 위로 올라가며 뿌요가 나오는 블록 찾기
                     }
-                    if (map[nr][c] != '.') { // 위에서 뿌요를 찾았으면 교체
+
+                    if(map[nr][c]!='.'){
                         map[r][c] = map[nr][c];
                         map[nr][c] = '.';
                     }
+
                 }
+
             }
         }
     }
+
 
 }
